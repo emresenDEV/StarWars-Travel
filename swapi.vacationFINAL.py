@@ -3,6 +3,12 @@
 import requests, json
 from openpyxl import Workbook
 
+import tkinter
+top = tkinter.Tk()
+
+#-----------------GUI-----------------
+top.mainloop()
+
 #-----------------API-----------------
 
 planetAPI = 'https://swapi.dev/api/planets/' #60 Planets
