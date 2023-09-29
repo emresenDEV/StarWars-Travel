@@ -204,4 +204,4 @@ for row_index, vehicle in enumerate(vehicles, start=2):
                 
 #-----------------SAVE-----------------
 
-wb.save("week_4/spreadsheets/StarWarsVacationSpots.xlsx")
+wb.save("spreadsheets/StarWarsVacationSpots.xlsx")
