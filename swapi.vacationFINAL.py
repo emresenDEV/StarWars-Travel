@@ -5,7 +5,6 @@ from openpyxl import Workbook
 
 import tkinter as tk
 from tkinter import ttk
-#Object Oriented Programming Approach
 
 #-----------------API-----------------
 
@@ -15,14 +14,14 @@ vehicleAPI = 'https://swapi.dev/api/vehicles/' #39 Vehicles
 
 #-----------------GUI-----------------
 
-# class App(tk.Tk):
-#     def __init__(self):
-#         super().__init__()
+# class App(tk.Tk):             #FIXME: probably remove
+#     def __init__(self):       #FIXME: probably remove
+#         super().__init__()    #FIXME: probably remove
 root = tk.Tk()
 nb = ttk.Notebook(root) #NOTEBOOK WIDGET
 
-#app = App()
-#app.mainloop()
+#app = App()                    #FIXME: probably remove
+#app.mainloop()                 #FIXME: probably remove
 
 #-----------------GUI|WIDGETS-----------------
 
