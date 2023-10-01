@@ -1,3 +1,12 @@
+#-----------------NOTES-----------------
+# use customertkinter module for a more sleek GUI
+# Could try pyqt. Qt creator
+# could try streamlit if you are building a data app
+# someone recommended kivy
+
+
+
+
 #-----------------IMPORTS-----------------
 
 import requests, json
@@ -5,54 +14,13 @@ from openpyxl import Workbook
 
 import tkinter as tk
 from tkinter import ttk
-
+import tkinter.ttk as ttk
+from tkinter import simpledialog #for Treeview Widget (excel spreadsheet appearance in notebook tabs)
 #-----------------API-----------------
 
 planetAPI = 'https://swapi.dev/api/planets/' #60 Planets
 starshipAPI = 'https://swapi.dev/api/starships/' #36 Starships
 vehicleAPI = 'https://swapi.dev/api/vehicles/' #39 Vehicles
-
-#-----------------GUI-----------------
-
-# class App(tk.Tk):             #FIXME: probably remove
-#     def __init__(self):       #FIXME: probably remove
-#         super().__init__()    #FIXME: probably remove
-root = tk.Tk()
-nb = ttk.Notebook(root) #NOTEBOOK WIDGET
-
-#app = App()                    #FIXME: probably remove
-#app.mainloop()                 #FIXME: probably remove
-
-#-----------------GUI|WIDGETS-----------------
-
-##################-----<NOTEBOOK WIDGET>-----##################
-#notebook = ttk.Notebook(master, *options) <syntax for notebook widget>
-
-#FRAMES : Planets, Starships, Vehicles
-planet_frame = ttk.Frame(nb)
-starship_frame = ttk.Frame(nb)
-vehicle_frame = ttk.Frame(nb)
-#Planets
-planet_label = ttk.Label(planet_frame, text="Choose a Planet")
-planet_label.pack(pady = 50, padx = 20)
-#Starships
-starship_label = ttk.Label(starship_frame, text="Getting There | Starship")
-starship_label.pack(pady = 50, padx = 20)
-#Vehicles
-vehicle_label = ttk.Label(vehicle_frame, text="Getting Around | Vehicle")
-vehicle_label.pack(pady = 50, padx = 20)
-#Pack Frames
-planet_frame.pack(fill= tk.BOTH, expand=True)
-starship_frame.pack(fill= tk.BOTH, expand=True)
-vehicle_frame.pack(fill= tk.BOTH, expand=True)
-#Add Frames to Notebook
-nb.add(planet_frame, text="Planets")
-nb.add(starship_frame, text="Starships")
-nb.add(vehicle_frame, text="Vehicles")
-#Pack Notebook
-root.mainloop()
-
-
 
 #SEPARATOR: used to group related widgets in a window. It displays a horizontal or vertical line that contains a label or a small amount of text describing the purpose of the group of widgets. NOTE: Instructions on top, or blurb about selection and then the selection options below.
     #CODE: Place this between the instructions and the selection options within each notebook tab.
@@ -102,12 +70,49 @@ root.mainloop()
 #imports: button, checkbutton, entry, frame, label, labelfram, menubutton, panedwindow, radiobutton, scale, and scrollbar. Use the ttk.style class to create and manage your own widget styles(improved style effects).
 
 #TREEVIEW widget: displays a hierarchical collection of items using columns. Each item has a textual label, an optional image, and an optional list of data values. The data values are displayed in successive columns after the tree label. (MIGHT BE OUR BEST BET FOR THE GUI) PLACE WITHIN THE NOTEBOOK WIDGET. SO: NOTEBOOK > FRAME > TREEVIEW. Or Each notebook tab has a treeview widget that displays the data for that tab.
-#CODE: 
-# import tkinter as tk      #should already be imported. 
-# import tkinter.ttk as ttk #should already be imported.
-# from tkinter import simpledialog #double-check import
+# #-----------------OPENPYXL HEADER SETUP-----------------
 
-# root = tk.Tk()
+
+
+# #Starship Worksheet
+# headers2 = ['Starship', 'Type of Ship', 'Price', 'Maximum Speed', 'Total Seats', 'Crew Size', 'Ship Size', 'Passenger Experience']
+# for index, header in enumerate(headers2, 1):
+#     starship_ws.cell(row=1, column=index, value=header)
+
+# #Vehicle Worksheet
+# headers3 = ['Vehicle', 'Price', 'Speed Limit', 'Maximum Group Size', 'Crew Size', 'Vehicle Size', 'Passenger Experience']
+# for index, header in enumerate(headers3, 1):
+#     vehicle_ws.cell(row=1, column=index, value=header)
+
+# #-----------------OPENPYXL API CONNECTION & DATA PULLING-----------------
+
+
+    
+# #Starship Worksheet
+# starships = []
+
+# response2 = requests.get(starshipAPI)
+# starshipData = response2.json()
+# starships += starshipData['results']
+
+# while starshipData['next']:
+#     response2 = requests.get(starshipData['next'])
+#     starshipData = response2.json()
+#     starships += starshipData['results']
+    
+
+# #Vehicle Worksheet
+# vehicles = []
+
+# response3 = requests.get(vehicleAPI)
+# vehicleData = response3.json()
+# vehicles += vehicleData['results']
+
+
+#CODE: 
+
+
+
 # data = [                  #here, I want to pull from below API datasets. 
 #    ["Bobby",26,20000],
 #    ["Harrish",31,23000],
@@ -115,7 +120,7 @@ root.mainloop()
 #    ["Mark",22, 20500],
 # ]
 # index=0
-# def read_data():
+# def read_data(): #reads the data and pulls from it
 #    for index, line in enumerate(data):
 #       tree.insert('', tk.END, iid = index,
 #          text = line[0], values = line[1:])
@@ -124,7 +129,7 @@ root.mainloop()
 # tree= ttk.Treeview(root, columns=columns ,height = 20)
 # tree.pack(padx = 5, pady = 5)
 
-# tree.heading('name', text='Planet')
+# tree.heading('name', text='Planet') #list assigned to column 
 # tree.heading('climate', text='Climate')
 # tree.heading('terrain', text='Terrain')
 # tree.heading('population', text='Population')
@@ -150,50 +155,6 @@ root.mainloop()
     # Combo.set("What matters most to you when selecting a vacation spot?")
     # Combo.pack(padx = 5, pady = 5)
     # top.mainloop()
-#NOTEBOOK: a container that contains multiple tabbed pages. Each tab contains a different set of widgets. The user can switch between tabs by clicking on the tabs. Use one tab for planet decision, one for starship decision, and one for vehicle decision. ##Using add() function. This adds new tabs to the end.
-    #notebook = ttk.Notebook(master, *options)
-
-    #root = tk.Tk()
-    #nb = ttk.Notebook(root)
-    
-    #FRAMEs : PLANETS, STARSHIPS, VEHICLES
-    #planet_frame = ttk.Frame(nb)
-    #starship_frame = ttk.Frame(nb)
-    #vehicle_frame = ttk.Frame(nb)
-    
-    #planet_label = ttk.Label(planet_frame, text="Choose a Planet")
-    #planet_label.pack(pady = 50, padx = 20)
-    #starship_label = ttk.Label(starship_frame, text="Getting There | Starship")
-    #starship_label.pack(pady = 50, padx = 20)
-    #vehicle_label = ttk.Label(vehicle_frame, text="Getting Around | Vehicle")
-    #vehicle_label.pack(pady = 50, padx = 20)
-    
-    #planet_frame.pack(fill= tk.BOTH, expand=True)
-    #starship_frame.pack(fill= tk.BOTH, expand=True)
-    #vehicle_frame.pack(fill= tk.BOTH, expand=True)
-    #nb.add(planet_frame, text="Planets")
-    #nb.add(starship_frame, text="Starships")
-    #nb.add(vehicle_frame, text="Vehicles")
-    
-    #root.mainloop()
-
-
-#SIZEGRIP: used to resize the parent widget in a top-level window. It is used in the lower-right corner of the window.
-    #CODE
-    # import tkinter as tk #should already be imported
-    # import tkinter.ttk as ttk #should already be imported
-
-    # root = tk.Tk()
-    # root.geometry("100x100")
-
-    # frame = ttk.Frame(root)
-    # label = ttk.Label(root, text = "So you want to travel the Star Wars universe and don't know where to begin?")
-    # label.pack(padx = 5, pady = 5)
-    # sizegrip = ttk.Sizegrip(frame)
-    # sizegrip.pack(expand = True, fill = tk.BOTH, anchor = tk.SE)
-    # frame.pack(padx = 10, pady = 10, expand = True, fill = tk.BOTH)
-
-    # root.mainloop()
 
 
 #-----------------OPENPYXL WORKBOOK SETUP-----------------+6
@@ -392,3 +353,144 @@ for row_index, vehicle in enumerate(vehicles, start=2):
 #-----------------OPENPYXL SAVE-----------------
 
 wb.save("spreadsheets/StarWarsVacationSpots.xlsx")
+
+#-----------------GUI-----------------
+
+# class App(tk.Tk):             #FIXME: probably remove
+#     def __init__(self):       #FIXME: probably remove
+#         super().__init__()    #FIXME: probably remove
+root = tk.Tk()
+nb = ttk.Notebook(root) #NOTEBOOK WIDGET
+
+#app = App()                    #FIXME: probably remove
+#app.mainloop()                 #FIXME: probably remove
+
+#-----------------GUI|WIDGETS-----------------
+
+#------------------<NOTEBOOK WIDGET>-----------------------
+#notebook = ttk.Notebook(master, *options) <syntax for notebook widget>
+
+#FRAMES : Planets, Starships, Vehicles (our tabs for our notebook)
+planet_frame = ttk.Frame(nb)
+starship_frame = ttk.Frame(nb)
+vehicle_frame = ttk.Frame(nb)
+
+#Planets
+planet_label = ttk.Label(planet_frame, text="Choose a Planet")
+planet_label.pack(pady = 50, padx = 20)
+
+planet_headers = ('Planet', 'Climate', 'Terrain', 'Population', 'Film Count')
+tree= ttk.Treeview(root, columns=planet_headers , height = 20)
+tree.pack(padx = 5, pady = 5)
+
+tree.add_packing_tree = ttk.Treeview(root, columns=planet_headers , height = 20)
+tree.add_packing_tree['columns'] = ('Planet', 'Climate', 'Terrain', 'Population', 'Film Count')
+tree.add_packing_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+tree.add_packing_tree.column('#0', anchor=tk.W, minwidth=0, stretch=0, width=0)
+tree.add_packing_tree.column('Planet', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Climate', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Terrain', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Population', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Film Count', anchor=tk.W, minwidth=50, stretch=1, width=50)
+
+tree.add_packing_tree.heading('Planet', text="Planet")
+tree.add_packing_tree.heading('Climate', text="Climate")
+tree.add_packing_tree.heading('Terrain', text="Terrain")
+tree.add_packing_tree.heading('Population', text="Population")
+tree.add_packing_tree.heading('Film Count', text="Film Count")
+#Pulls Planet Data into above columns and rows within Treeview Widget
+for row in planet_ws.iter_rows(min_row=2, min_col=0):
+    for cell in row:
+        tree.add_packing_tree.insert('', 'end', values=[cell.value for cell in row])
+
+
+#Starships
+starship_label = ttk.Label(starship_frame, text="Getting There | Starship")
+starship_label.pack(pady = 50, padx = 20)
+
+starship_headers = ('Starship', 'Type of Ship', 'Price', 'Maximum Speed', 'Total Seats', 'Crew Size', 'Ship Size', 'Passenger Experience')
+tree= ttk.Treeview(root, columns=starship_headers , height = 20)
+tree.pack(padx = 5, pady = 5)
+
+tree.add_packing_tree = ttk.Treeview(root, columns=starship_headers , height = 20)
+tree.add_packing_tree['columns'] = ('Starship', 'Type of Ship', 'Price', 'Maximum Speed', 'Total Seats', 'Crew Size', 'Ship Size', 'Passenger Experience')
+tree.add_packing_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+tree.add_packing_tree.column('#0', anchor=tk.W, minwidth=0, stretch=0, width=0)
+tree.add_packing_tree.column('Starship', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Type of Ship', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Price', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Maximum Speed', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Total Seats', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Crew Size', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Ship Size', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Passenger Experience', anchor=tk.W, minwidth=50, stretch=1, width=50)
+
+tree.add_packing_tree.heading('Starship', text="Starship")
+tree.add_packing_tree.heading('Type of Ship', text="Type of Ship")
+tree.add_packing_tree.heading('Price', text="Price")
+tree.add_packing_tree.heading('Maximum Speed', text="Maximum Speed")
+tree.add_packing_tree.heading('Total Seats', text="Total Seats")
+tree.add_packing_tree.heading('Crew Size', text="Crew Size")
+tree.add_packing_tree.heading('Ship Size', text="Ship Size")
+tree.add_packing_tree.heading('Passenger Experience', text="Passenger Experience")
+#Pulls Starship Data into above columns and rows within Treeview Widget
+for row in starship_ws.iter_rows(min_row=2, min_col=0):
+    for cell in row:
+        tree.add_packing_tree.insert('', 'end', values=[cell.value for cell in row])
+
+#Vehicles
+vehicle_label = ttk.Label(vehicle_frame, text="Getting Around | Vehicle")
+vehicle_label.pack(pady = 50, padx = 20)
+
+vehicle_headers = ('Vehicle', 'Price', 'Speed Limit', 'Maximum Group Size', 'Crew Size', 'Vehicle Size', 'Passenger Experience')
+tree= ttk.Treeview(root, columns=vehicle_headers , height = 20)
+tree.pack(padx = 5, pady = 5)
+
+tree.add_packing_tree = ttk.Treeview(root, columns=vehicle_headers , height = 20)
+tree.add_packing_tree['columns'] = ('Vehicle', 'Price', 'Speed Limit', 'Maximum Group Size', 'Crew Size', 'Vehicle Size', 'Passenger Experience')
+tree.add_packing_tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+tree.add_packing_tree.column('#0', anchor=tk.W, minwidth=0, stretch=0, width=0)
+tree.add_packing_tree.column('Vehicle', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Price', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Speed Limit', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Maximum Group Size', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Crew Size', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Vehicle Size', anchor=tk.W, minwidth=50, stretch=1, width=50)
+tree.add_packing_tree.column('Passenger Experience', anchor=tk.W, minwidth=50, stretch=1, width=50)
+
+tree.add_packing_tree.heading('Vehicle', text="Vehicle")
+tree.add_packing_tree.heading('Price', text="Price")
+tree.add_packing_tree.heading('Speed Limit', text="Speed Limit")
+tree.add_packing_tree.heading('Maximum Group Size', text="Maximum Group Size")
+tree.add_packing_tree.heading('Crew Size', text="Crew Size")
+tree.add_packing_tree.heading('Vehicle Size', text="Vehicle Size")
+tree.add_packing_tree.heading('Passenger Experience', text="Passenger Experience")
+#Pulls Vehicle Data into above columns and rows within Treeview Widget
+for row in vehicle_ws.iter_rows(min_row=2, min_col=0):
+    for cell in row:
+        tree.add_packing_tree.insert('', 'end', values=[cell.value for cell in row])
+
+#Pack Frames
+planet_frame.pack(fill= tk.BOTH, expand=True)
+starship_frame.pack(fill= tk.BOTH, expand=True)
+vehicle_frame.pack(fill= tk.BOTH, expand=True)
+#Add Frames to Notebook
+nb.add(planet_frame, text="Planets")
+nb.add(starship_frame, text="Starships")
+nb.add(vehicle_frame, text="Vehicles")
+#Pack Notebook
+#root.mainloop() <moved to bottom of GUI code>
+
+#------------------<RESIZE WINDOW WIDGET>-----------------------
+
+root.geometry("500x700") #<syntax for resize window widget>
+frame = ttk.Frame(root)
+#label = ttk.Label(root, text = "So you want to travel the Star Wars universe and don't know where to begin?")
+#label.pack(padx = 5, pady = 5)
+sizegrip = ttk.Sizegrip(frame)
+sizegrip.pack(expand = True, fill = tk.BOTH, anchor = tk.SE)
+frame.pack(padx = 10, pady = 10, expand = True, fill = tk.BOTH)
+
+#Pack Notebook
+root.mainloop()
+StopIteration
