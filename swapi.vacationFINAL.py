@@ -3,7 +3,9 @@
 # Could try pyqt. Qt creator
 # could try streamlit if you are building a data app
 # someone recommended kivy
-
+#current module trouble shooting tree view: https://stackoverflow.com/questions/43519874/openpyxl-to-treeview-passing-information
+    #https://docs.python.org/3/library/tkinter.ttk.html#treeview
+    #https://docs.python.org/3/library/tkinter.ttk.html#column-identifiers
 
 
 
